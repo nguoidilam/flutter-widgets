@@ -19,10 +19,16 @@ dependencies:
     sdk: flutter
   timezone: 0.9.3
   syncfusion_flutter_core:
-    path: ../syncfusion_flutter_core
+    git:
+      url: https://github.com/nguoidilam/flutter-widgets.git
+      path: packages/syncfusion_flutter_core
+      ref: luklak
 
   syncfusion_flutter_datepicker:
-    path: ../syncfusion_flutter_datepicker
+    git:
+      url: https://github.com/nguoidilam/flutter-widgets.git
+      path: packages/syncfusion_flutter_datepicker
+      ref: luklak
 
   intl: '>=0.18.1 <0.20.0'
 
