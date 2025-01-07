@@ -868,28 +868,17 @@ class _AppointmentLayoutState extends State<AppointmentLayout> {
       }
 
       final DateTime endTime = appointment.actualEndTime;
-      final Duration difference =
-          AppointmentHelper.getDifference(startTime, endTime);
+      double widthStart = (startTime.hour / 24) * cellWidth;
+      double widthEnd = cellWidth - ((endTime.hour / 24) * cellWidth);
 
       /// The width for the appointment UI, calculated based on the date
       /// difference between the start and end time of the appointment.
-      double width = (difference.inDays + 1) * cellWidth;
+      double width = ((endTime.day - startTime.day + 1) * cellWidth) - widthStart - widthEnd;
 
-      /// For span appointment less than 23 hours the difference will fall
-      /// as 0 hence to render the appointment on the next day, added one
-      /// the width for next day.
-      if (difference.inDays == 0 && endTime.day != startTime.day) {
-        width += cellWidth;
-      }
+      final Radius cornerRadius = Radius.circular((appointmentHeight * 0.1) > 2 ? 2 : (appointmentHeight * 0.1));
 
-      width = width - cellEndPadding;
-      final Radius cornerRadius = Radius.circular(
-          (appointmentHeight * 0.1) > 2 ? 2 : (appointmentHeight * 0.1));
       final RRect rect = RRect.fromRectAndRadius(
-          Rect.fromLTWH(
-              widget.isRTL ? xPosition - width : xPosition,
-              yPosition,
-              width > 0 ? width : 0,
+          Rect.fromLTWH(widget.isRTL ? xPosition - width : xPosition + widthStart, yPosition, width > 0 ? width : 0,
               appointmentHeight > 1 ? appointmentHeight - 1 : 0),
           cornerRadius);
       appointmentView.appointmentRect = rect;
